@@ -6,7 +6,7 @@ MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 USER root
 
 # Spark dependencies
-ENV APACHE_SPARK_VERSION 1.5.1
+ENV APACHE_SPARK_VERSION 1.5.2
 RUN apt-get -y update && \
     apt-get install -y --no-install-recommends openjdk-7-jre-headless && \
     apt-get clean
@@ -96,6 +96,11 @@ RUN mkdir -p /opt/conda/share/jupyter/kernels/scala
 COPY kernel.json /opt/conda/share/jupyter/kernels/scala/
 
 USER root
+
+# Install custom libraries
+RUN curl -sL --retry 3 "http://central.maven.org/maven2/org/apache/hadoop/hadoop-aws/2.7.1/hadoop-aws-2.7.1.jar" -o $SPARK_HOME/lib/hadoop-aws-2.7.1.jar \
+ && curl -sL --retry 3 "http://central.maven.org/maven2/com/amazonaws/aws-java-sdk/1.7.4/aws-java-sdk-1.7.4.jar" -o $SPARK_HOME/lib/aws-java-sdk-1.7.4.jar \
+ && curl -sL --retry 3 "http://central.maven.org/maven2/joda-time/joda-time/2.9.1/joda-time-2.9.1.jar" -o $SPARK_HOME/lib/joda-time-2.9.1.jar
 
 # Install Python 2 kernel spec globally to avoid permission problems when NB_UID
 # switching at runtime.

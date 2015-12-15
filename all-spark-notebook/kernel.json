@@ -5,5 +5,8 @@
         "/opt/spark-kernel/bin/spark-kernel",
         "--profile",
         "{connection_file}"
-    ]
+    ],
+    "env": {
+        "SPARK_OPTS": "--conf spark.driver.memory=4g --conf spark.executor.memory=4g --conf spark.driver.cores=4 --conf spark.master=local[4] --driver-java-options=-Xms4g --driver-java-options=-Xmx4g --driver-java-options=-Dlog4j.logLevel=trace --master=local[4] --driver-class-path=/usr/local/spark/lib/aws-java-sdk-1.7.4.jar:/usr/local/spark/lib/joda-time-2.9.1.jar:/usr/local/spark/lib/hadoop-aws-2.7.1.jar"
+    }
 }
